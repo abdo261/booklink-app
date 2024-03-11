@@ -1,0 +1,24 @@
+.header-container{
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+.header-container img{
+    width: 64px;
+}
+.header-container .logo span{
+  font-weight: 600;
+  font-size: 25px;
+  color: #0594FD;
+}
+.header-container .logo span.first{
+  color: #1746BC;
+}
+
+@media only screen and (max-width: 960px) {
+    .header-container{
+        justify-content: center;
+    }
+    .header-container .avatare{
+display: none;
+    }
+}

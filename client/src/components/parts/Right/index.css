@@ -1,0 +1,8 @@
+button.active {
+    border-bottom: 3px solid rgb(0, 112, 240);
+}
+div.chat-list-container{
+    max-height:calc(100vh - 355px);
+    overflow: hidden;
+    overflow-y: scroll;
+}
