@@ -13,7 +13,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
-const DropDownProfileCmp = ({  onclick }) => {
+const AvatarDropDown = ({  onclick }) => {
   const navigate =useNavigate()
   return (
     <Dropdown placement="bottom-end">
@@ -62,4 +62,4 @@ const DropDownProfileCmp = ({  onclick }) => {
   );
 };
 
-export default DropDownProfileCmp;
+export default AvatarDropDown;

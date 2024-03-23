@@ -14,7 +14,7 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-    background-color: #f6f6f6;
+    /* background-color: #f6f6f6; */
   }
   
   .header {
@@ -28,6 +28,7 @@
     text-align: center;
     z-index: 999;
     height: var(--header-height);
+    border-bottom: 3px solid #aaaaaa;
   }
   
   .left-section,
@@ -142,4 +143,10 @@
   a.link-page.active{
     background-color: #0596fdc2;
     color: white;
+}
+
+div.modal-body {
+  height: 290px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

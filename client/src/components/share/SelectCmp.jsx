@@ -24,7 +24,7 @@ const SelectCmp = ({
   description,
   errorMessage = null,
   onClose,
-  isInvalid = true,
+  isInvalid = false,
 }) => {
   const [value, setValue] = useState(defaultValue);
 

@@ -6,9 +6,12 @@ import "swiper/css/effect-cards";
 import "./style.css";
 
 import { EffectCards } from "swiper/modules";
-import { Tooltip } from "@nextui-org/react";
+import { Spinner, Tooltip } from "@nextui-org/react";
+import { useState } from "react";
 
 export default function SwipperCardBooks({ books }) {
+  const [loading, setLoading] = useState(true);
+
   return (
     <>
       <Swiper
@@ -18,18 +21,14 @@ export default function SwipperCardBooks({ books }) {
         className="swiper-card my-4"
       >
         {books.map((b) => (
-          <SwiperSlide>
+          <SwiperSlide >
             <Tooltip
               showArrow={true}
               delay={1}
               closeDelay={0}
               content={b.title}
-              
               classNames={{
-                base: [
-                 
-                  "before:bg-neutral-400 dark:before:bg-white",
-                ],
+                base: ["before:bg-neutral-400 dark:before:bg-white"],
                 content: [
                   "py-2 px-4 shadow-xl font-bold",
                   "text-black bg-gradient-to-br from-white to-neutral-400",
@@ -37,9 +36,14 @@ export default function SwipperCardBooks({ books }) {
               }}
             >
               <div>
-                <img src={b.img} alt={b.title}  />
+                {loading && <Spinner />}
+                <img
+                  src={`http://localhost:8000/api/images/book_covers/${b.image}`}
+                  alt={"b.title"}
+                  style={{ display: loading ? "none" : "block" }}
+                  onLoad={() => setLoading(false)}
+                />
               </div>
-
             </Tooltip>
           </SwiperSlide>
         ))}

@@ -15,7 +15,7 @@ const Right = ({ showRight }) => {
   const [ShowNotification, setShowNotification] = useState(true);
   return (
     <div
-      className={`right-section flex flex-col  gap-2 ${
+      className={`right-section flex flex-col gap-2 ${
         showRight ? "active" : ""
       }`}
     >

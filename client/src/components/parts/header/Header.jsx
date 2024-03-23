@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Header = ({ toggleLeft, toggleRight, showLeft, showRight }) => {
   return (
-    <div className="header">
+    <div className="header header ">
       <button className="toggle-btn toggle-btn-left" onClick={toggleLeft}>
         {showLeft ? <IoCloseOutline size={30} /> : <BsList size={30} />}
       </button>

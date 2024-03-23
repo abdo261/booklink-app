@@ -8,6 +8,7 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
+
   const toggleLeft = () => {
     setShowRight((prev) => false);
     setShowLeft((prev) => !prev);
@@ -28,11 +29,11 @@ const Layout = () => {
         showLeft={showLeft}
         showRight={showRight}
       />
-     <Left showLeft={showLeft} toggleLeft={toggleLeft}/>
+      <Left showLeft={showLeft} toggleLeft={toggleLeft} />
       <Right showRight={showRight} />
       <div className="middle-section p-4" onClick={closeBoth}>
-        <Outlet/>
- </div>
+        <Outlet />
+      </div>
     </>
   );
 };

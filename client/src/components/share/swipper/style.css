@@ -36,11 +36,7 @@
   width: 100%;
 }
 
-div.modal-body {
-  height: 290px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+
 
 .swiper-card {
   width: 180px;
@@ -55,7 +51,8 @@ div.modal-body {
   font-size: 22px;
   font-weight: bold;
   color: #fff;
- 
+  background-color: rgb(171, 171, 254);
+  border: 1px solid black;
 }
 
 .swiper-card .swiper-slide img{

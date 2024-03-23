@@ -15,18 +15,21 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Spinner,
   Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
 import { books } from "./data";
 import SwipperCardBooks from "./SwipperCardBooks";
 
-export default function SwipperHome() {
+export default function SwipperHome({ authors }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [AuthorClick, setAuthorClick] = useState(null);
+  const [authorSelected, setAuthorSelected] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const handleOpen = (author) => {
-    setAuthorClick(author);
+    setAuthorSelected(author);
     onOpen();
   };
   useEffect(() => {
@@ -62,12 +65,19 @@ export default function SwipperHome() {
           pauseOnMouseEnter: true,
         }}
       >
-        {books.map((b) => (
+        {authors.map((author) => (
           <SwiperSlide>
-            <img src={b.img} className="book" key={b.id} alt={b.title} />
+            {loading && <Spinner />}
+            <img
+              src={`http://localhost:8000/api/images/book_covers/${author.books[0].image}`}
+              className="book"
+              alt={author.title}
+              style={{ display: loading ? "none" : "block" }}
+              onLoad={() => setLoading(false)}
+            />
             <div
               className="avatar-container cursor-pointer"
-              onClick={() => handleOpen(b.author)}
+              onClick={() => handleOpen(author)}
             >
               <Tooltip
                 showArrow={true}
@@ -75,14 +85,18 @@ export default function SwipperHome() {
                 closeDelay={0}
                 content={
                   <div className="px-1 py-2">
-                    <div className="text-small font-bold">{b.author}</div>
-                    <div className="text-small">{b.title} </div>
+                    <div className="text-small font-bold">{author.name}</div>
+                    <div className="text-small">
+                      {author.books.length} Books
+                    </div>
                   </div>
                 }
               >
                 <img
-                  src="https://cdn1.booknode.com/author_picture/56/ahmed-sefrioui-55994-330-540.jpg"
-                  alt={b.title}
+                  src={`http://localhost:8000/api/images/authors/${author.image}`}
+                  alt={author.name}
+                  style={{ display: loading ? "none" : "block" }}
+                  onLoad={() => setLoading(false)}
                 />
               </Tooltip>
             </div>
@@ -92,14 +106,14 @@ export default function SwipperHome() {
       <ModalAuthor
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        AuthorClick={AuthorClick}
+        authorSelected={authorSelected}
         books={books}
       />
     </>
   );
 }
 
-const ModalAuthor = ({ isOpen, onOpenChange, AuthorClick, books }) => {
+const ModalAuthor = ({ isOpen, onOpenChange, authorSelected, books }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -112,41 +126,23 @@ const ModalAuthor = ({ isOpen, onOpenChange, AuthorClick, books }) => {
           <>
             <ModalHeader className="flex flex-col gap-1">
               <div className="flex items-center gap-3">
-                <Badge content={books.length} color="primary">
-                  <Avatar src="https://cdn1.booknode.com/author_picture/56/ahmed-sefrioui-55994-330-540.jpg" />
+                <Badge content={authorSelected.books.length} color="primary">
+                  <Avatar
+                    src={`http://localhost:8000/api/images/authors/${authorSelected.image}`}
+                  />
                 </Badge>
-                {AuthorClick}
+                {authorSelected.name}
               </div>
             </ModalHeader>
             <ModalBody>
               <div className="modal-body">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                <p className="font-bold">
+                  author birth :{" "}
+                  <span className="text-gray-400">
+                    {authorSelected.date_of_birth}
+                  </span>
                 </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-
-                <SwipperCardBooks books={books} />
+                <SwipperCardBooks books={authorSelected.books} />
               </div>
             </ModalBody>
             <ModalFooter>

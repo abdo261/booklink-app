@@ -1,0 +1,24 @@
+.create-category img.category-img {
+  height: 150px;
+  max-width: 100%;
+}
+
+div.table-img {
+  height: 40px;
+}
+div.table-img img {
+  height: 100%;
+}
+.cards {
+  max-height: 390px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+/* .name-cell {
+  width: 200px; 
+} */
+/* .image-cell::before,
+.actions-cell::before,.image-cell,
+.actions-cell {
+  width: fit-content;
+} */

@@ -1,0 +1,23 @@
+div.comments {
+  overflow: hidden;
+}
+div.comments,
+div.comments .comments-list {
+  transition: height 0.3s ease-in-out;
+  height: 0px;
+}
+div.comments.show-comments {
+  height: 350px;
+}
+
+div.comments .comments-list.show-comments {
+  height: 200px;
+  overflow-y: auto;
+  transition: height 0.3s ease-in-out;
+}
+/* svg.hide-comments {
+  position: absolute;
+
+  bottom: 5px;
+  margin: 0px auto;
+} */

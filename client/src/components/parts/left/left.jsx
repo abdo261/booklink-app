@@ -1,18 +1,16 @@
 import "./index.css";
 import { User } from "@nextui-org/react";
-
-import DropDownProfileCmp from "../../share/DropDownProfileCmp";
-
 import { Links } from "./data";
 import LinkPagesComp from "../../share/LinkPagesCmp";
 import { BiLogOutCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import AvatarDropDown from "../../share/dropdowns/AvatarDropDown";
 
 const Left = ({ showLeft,toggleLeft}) => {
   return <div
   className={`left-section  ${
     showLeft ? "active" : ""
-  } flex flex-col gap-2 `}
+  } flex flex-col gap-2  `}
 >
   <div
     className={`top p-3 bg-white m-3 shadow-lg rounded-lg flex items-center justify-between`}
@@ -34,7 +32,7 @@ const Left = ({ showLeft,toggleLeft}) => {
         name={<span className="font-bold text-base whitespace-nowrap truncate overflow-hidden">Abdellah Dev</span>}
       />
     </Link>
-    <DropDownProfileCmp  onclick={toggleLeft} />
+    <AvatarDropDown  onclick={toggleLeft} />
   </div>
   <div
     className={`bottom p-5  bg-white mb-3 mx-3 shadow-lg rounded-lg flex-auto flex flex-col gap-3`}
