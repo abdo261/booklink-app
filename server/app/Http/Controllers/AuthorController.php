@@ -14,9 +14,20 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::with('books.categorys')->get();
+        // Get all authors with their books and categories, sorted by the creation date of the author in descending order
+        $authors = Author::latest()->get();
+    
         return response()->json($authors);
     }
+    
+    public function indexByBooks()
+    {
+        // Get all authors with their books and categories, sorted by the creation date of the author in descending order
+        $authors = Author::has('books')->with('books.categorys')->latest()->get();
+    
+        return response()->json($authors);
+    }
+    
 
     /**
      * Store a newly created resource in storage.

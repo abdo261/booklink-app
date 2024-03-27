@@ -20,9 +20,9 @@ const BtnCmp = ({
   ariaLabel,
   type
 }) => {
-  const handelCklick = (e) => {
-    e.preventDefault();
-    oncklick();
+  const handelCklick = () => {
+    type!=="submit"&&oncklick();
+    
   };
   return (
     <Button

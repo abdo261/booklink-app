@@ -21,6 +21,7 @@ import {
 } from "@nextui-org/react";
 import { books } from "./data";
 import SwipperCardBooks from "./SwipperCardBooks";
+import { checkImage } from "../../../utils/functions";
 
 export default function SwipperHome({ authors }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -40,6 +41,7 @@ export default function SwipperHome({ authors }) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+
   }, []);
   const SlidesPerView = (w) => {
     if (1122 > w && w > 960) return 2;
@@ -69,7 +71,7 @@ export default function SwipperHome({ authors }) {
           <SwiperSlide>
             {loading && <Spinner />}
             <img
-              src={`http://localhost:8000/api/images/book_covers/${author.books[0].image}`}
+              src={checkImage(author)}
               className="book"
               alt={author.title}
               style={{ display: loading ? "none" : "block" }}
@@ -93,7 +95,7 @@ export default function SwipperHome({ authors }) {
                 }
               >
                 <img
-                  src={`http://localhost:8000/api/images/authors/${author.image}`}
+                  src={author.image ? `http://localhost:8000/api/images/authors/${author.image}` :'/images/default-autor.webp'}
                   alt={author.name}
                   style={{ display: loading ? "none" : "block" }}
                   onLoad={() => setLoading(false)}
@@ -128,7 +130,7 @@ const ModalAuthor = ({ isOpen, onOpenChange, authorSelected, books }) => {
               <div className="flex items-center gap-3">
                 <Badge content={authorSelected.books.length} color="primary">
                   <Avatar
-                    src={`http://localhost:8000/api/images/authors/${authorSelected.image}`}
+                  src={authorSelected.image ? `http://localhost:8000/api/images/authors/${authorSelected.image}` :'/images/default-autor.webp'}
                   />
                 </Badge>
                 {authorSelected.name}

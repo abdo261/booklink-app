@@ -3,17 +3,17 @@ import { authorActions } from "../slices/AuthorSlice";
 
 export const getAuthors = () => {
   return async (dispatch) => {
-    dispatch(authorActions.setLoading(true));
+    dispatch(authorActions.setError(null));
     dispatch(authorActions.setAuthors(null));
+    dispatch(authorActions.setLoading(true));
     try {
-      const res = await request.get("/authors");
-      console.log("Response:", res);
+      const res = await request.get("/authors-books");
+      // console.log("Response:", res);
       console.log("Response Data:", res.data);
-      dispatch(authorActions.setAuthors(res.data));
       dispatch(authorActions.setError(null));
+      dispatch(authorActions.setAuthors(res.data));
     } catch (err) {
-        console.log(err)
-      dispatch(authorActions.setError(err.response.data.message));
+      dispatch(authorActions.setError(err.message));
     } finally {
       dispatch(authorActions.setLoading(false));
     }

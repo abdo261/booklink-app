@@ -18,7 +18,7 @@ class ImagePostFactory extends Factory
     public function definition(): array
     {
         
-        $response = Http::get("https://picsum.photos/200/300");
+        $response = Http::get("https://random-image-pepebigotes.vercel.app/api/random-image");
         $imageData = base64_encode($response->body());
         return [
             'name' => fake()->word() . '.jpg',

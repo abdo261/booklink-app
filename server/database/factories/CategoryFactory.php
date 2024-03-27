@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ImageCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,10 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+       $image= ImageCategory::factory()->create();
         return [
             'name'=>fake()->unique()->word(),
-            'image'=>fake()->unique()->numberBetween(1,10)
+            'image'=>$image->id
         ];
     }
 }

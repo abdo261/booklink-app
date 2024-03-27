@@ -19,7 +19,7 @@ class BookFactory extends Factory
     public function definition(): array
     {
         $authors = Author::select('id')->get();
-        $image = ImageBookCover::select('id')->get();
+        $image = ImageBookCover::factory()->create();
         return [
             'title' => fake()->unique()->sentence(3),
             'date_release' => fake()->date(),
@@ -28,7 +28,7 @@ class BookFactory extends Factory
             'language' => fake()->languageCode(),
             'summary' => fake()->text(),
             'stock' => fake()->numberBetween(0, 20),
-            'image' => fake()->unique()->randomElement($image),
+            'image' => $image->id,
             'author_id' => fake()->randomElement($authors)
 
         ];

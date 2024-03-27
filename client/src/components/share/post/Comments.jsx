@@ -2,9 +2,9 @@ import { Avatar, User } from "@nextui-org/react";
 import React from "react";
 import TextAreaCmp from "../../share/TextAreaCmp";
 import BtnCmp from "../../share/BtnCmp";
-import { comments } from "../../../pages/home/data";
+import { timeAgo } from "../../../utils/functions";
 
-const Comments = ({ show }) => {
+const Comments = ({ show, comments }) => {
   return (
     <div className={`comments ${show} mt-3 `}>
       <div className="m-4 flex flex-col gap-3">
@@ -32,8 +32,8 @@ const Comments = ({ show }) => {
         <div className="ligne bg-gray-100 w-full"></div>{" "}
       </div>
       <div className={`comments-list ${show}`}>
-        {comments.map((c) => (
-          <Comment key={c.id} comment={c} />
+        {comments.map((c, i) => (
+          <Comment key={i} comment={c} />
         ))}
       </div>
     </div>
@@ -44,26 +44,27 @@ export default Comments;
 
 const Comment = ({ comment }) => {
   return (
-    <div className="flex items-start gap-2  w-full px-3 py-2 ">
-      {" "}
-      <div className="flex-shrink-0">
-        <User
-          name="Jane Doe"
-          description="CLient"
-          avatarProps={{
-            src: comment.profilePicture,
-            isBordered: true,
-            size: "sm",
-          }}
-        />
-      </div>
-      <span className="flex-grow flex flex-col p-2 rounded-md bg-gray-100 text-sm">
-        <span>{comment.desc}</span>
+    <div className="flex  flex-col rounded-md bg-gray-100 text-sm my-2 px-3 mr-2  p-2">
+      <div className="flex items-start justify-between gap-2  w-full  ">
+        {" "}
+        <div className="flex-shrink-0">
+          <User
+            name={comment.user.profile.user_name}
+            description="CLient"
+            avatarProps={{
+              src: `${process.env.REACT_APP_API_BASE_URL}/images/profiles/${comment.user.profile.image}`,
+              isBordered: true,
+            }}
+            className="font-bold"
+          />
+        </div>
         <span className=" ml-auto text-gray-400 underline font-bold whitespace-no-wrap text-xs ">
-        2 min ago
-      </span>
-      </span>
-     
+          {timeAgo(comment.created_at)}
+        </span>
+      </div>
+      <div className="pl-12">
+        {comment.descreption}
+      </div>
     </div>
   );
 };

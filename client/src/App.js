@@ -20,6 +20,7 @@ function App() {
         {ProfileRoutes}
         {UserRoutes}
       </Routes>
+   
     </>
   );
 }

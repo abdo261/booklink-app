@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 
-const DropDownEdite = ({ icon, size }) => {
+const DropDownEdite = ({ icon, size,id }) => {
   return (
     <Dropdown size={size}>
       <DropdownTrigger>
@@ -21,8 +21,9 @@ const DropDownEdite = ({ icon, size }) => {
           startContent={<FaPencilAlt />}
           className="text-warning"
           color="warning"
+          
         >
-          Edit{" "}
+          Edit
         </DropdownItem>
         <DropdownItem
           startContent={<FaTrashAlt />}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class LikeController extends Controller
 {
@@ -22,13 +23,22 @@ class LikeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validateData = Validator::make($request->only('user_id', 'post_id'), [
             'user_id' => 'required|exists:users,id',
             'post_id' => 'required|exists:posts,id',
         ]);
-
-        $like = Like::create($request->all());
-
+    
+        if ($validateData->fails()) {
+            return response()->json(['error' => $validateData->errors()]);
+        }
+    
+        $likeData = [
+            'user_id' => $request->user_id,
+            'post_id' => $request->post_id,
+        ];
+    
+        $like = Like::create($likeData);
+    
         return response()->json(['message' => 'Like created successfully', 'like' => $like]);
     }
 
@@ -37,7 +47,7 @@ class LikeController extends Controller
      */
     public function show(string $id)
     {
-         // No need to get like by id, so this method remains empty
+        // No need to get like by id, so this method remains empty
     }
 
     /**

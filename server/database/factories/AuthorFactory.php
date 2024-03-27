@@ -17,11 +17,11 @@ class AuthorFactory extends Factory
      */
     public function definition(): array
     {
-        $image = ImageAuthor::select('id')->get();
+        $image = ImageAuthor::factory()->create();
         return [
             'name' => fake()->unique()->name(),
             'date_of_birth' => fake()->date(),
-            'image' => fake()->unique()->randomElement($image)
+            'image' => $image->id
         ];
     }
 }

@@ -14,7 +14,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('likes.user.profile','comments.user.profile','user.profile')->get();
+       
+        $posts = Post::with('likes.user.profile','comments.user.profile','user.profile.followers')->paginate(10);
+        return response()->json($posts);
+    }
+    public function indexNextPage(Request $request)
+    {
+        $nextPage = $request->input('next_page');
+        $posts = Post::with('likes.user.profile','comments.user.profile','user.profile.followers')->paginate(10 ,['*'], 'page', $nextPage);
         return response()->json($posts);
     }
 
@@ -43,7 +50,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::with('likes.user.profile','comments.user.profile','user.profile')->find($id);
+        $post = Post::with('likes.user.profile','comments.user.profile','user.profile.followers')->find($id);
 
         if (!$post) {
             return response()->json(['message' => 'Post not found'], Response::HTTP_NOT_FOUND);

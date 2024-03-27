@@ -1,15 +1,14 @@
 import { Avatar, AvatarGroup } from '@nextui-org/react'
 import React from 'react'
 
-const AvatarGroupeCmp = () => {
+const AvatarGroupeCmp = ({likes}) => {
   return (
     <AvatarGroup isBordered max={3}  size='sm'>
-    <Avatar  src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-    <Avatar  src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
-    <Avatar  src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-    <Avatar  src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
-    <Avatar  src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
-    <Avatar  src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
+      {
+        likes.map((l,i)=>(
+           <Avatar  src={`${process.env.REACT_APP_API_BASE_URL}/images/profiles/${l.user.profile.image}`} />
+        ))
+      }
   </AvatarGroup>  )
 }
 

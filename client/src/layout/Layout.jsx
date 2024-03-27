@@ -4,7 +4,8 @@ import "./layout.css";
 import Left from "../components/parts/left/left";
 import Right from "../components/parts/Right/right";
 import { Outlet } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Layout = () => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
@@ -34,6 +35,19 @@ const Layout = () => {
       <div className="middle-section p-4" onClick={closeBoth}>
         <Outlet />
       </div>
+      <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          draggablePercent={60}
+        />
     </>
   );
 };

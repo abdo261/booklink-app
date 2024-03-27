@@ -9,11 +9,11 @@ import AvatarGroupeCmp from "./AvatarGroupeCmp";
 import { useState } from "react";
 import LikesModale from "../../share/modale/LikesModale";
 import Comments from "./Comments";
+import PostDescription from "./PostDescription";
 
 const Post = ({ post }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [ShowComments, setShowComments] = useState(false);
-  console.log(post);
   const [isLiked, setIsLiked] = useState(false);
   return (
     <>
@@ -27,38 +27,40 @@ const Post = ({ post }) => {
             content={
               <div className="px-1 py-2 max-w-70 overflow-hidden">
                 <div className="text-small font-bold whitespace-nowrap overflow-ellipsis">
-                  {post.name}
+                  {post.user.profile.user_name}
                 </div>
                 <div className="text-small whitespace-nowrap overflow-ellipsis">
-                  {post.name}
+                  {post.user.profile.followers.length} followers
                 </div>
               </div>
             }
           >
-            <Link to={`/profiles/show/${post.userId}`} className="">
+            <Link to={`/profiles/show/${post.user.profile.id}`} className="">
               {/* <Avatar  src={post.profilePic}/> */}
               <User
                 as="button"
                 avatarProps={{
                   isBordered: true,
-                  src: post.profilePic,
+                  src: `${process.env.REACT_APP_API_BASE_URL}/images/profiles/${post.user.profile.image}`,
                 }}
                 description="user"
-                name="Tony Reichert"
+                name={post.user.profile.user_name}
               />
             </Link>
           </Tooltip>
-          <DropDownEdite size="sm" icon={<IoMdMore size={20} />} />
+          <DropDownEdite size="sm" icon={<IoMdMore size={20} />} id={post.id} />
         </div>
         <div className="post-body">
-          <div className="post-text font-bold">{post.desc}</div>
-          {post?.img && (
+          <PostDescription description={post.description} />
+          {post.image && (
             <div className="post-image flex justify-center py-3">
               <Image
-                class="max-w-"
+                loading="eager"
+                class="max-w- "
                 alt="NextUI hero Image with delay"
-                src={post.img}
-                width={350}
+                src={`${process.env.REACT_APP_API_BASE_URL}/images/posts/${post.user.profile.image}`}
+                height={350}
+                disableSkeleton={false}
               />
             </div>
           )}
@@ -81,16 +83,25 @@ const Post = ({ post }) => {
             )}
             <span className="cursor-pointer" onClick={onOpen}>
               {" "}
-              <AvatarGroupeCmp />
+              <AvatarGroupeCmp likes={post.likes} />
             </span>
           </div>
           <div className="right" onClick={() => setShowComments(!ShowComments)}>
+            {post.comments.length}{" "}
             <TfiCommentAlt size={26} className="cursor-pointer" />
           </div>
         </div>
-       <Comments show={ShowComments && "show-comments" } />
+        <Comments
+          show={ShowComments && "show-comments"}
+          comments={post.comments}
+        />
       </div>
-      <LikesModale onOpenChange={onOpenChange} isOpen={isOpen} key={post.id} />
+      <LikesModale
+        onOpenChange={onOpenChange}
+        likes={post.likes}
+        isOpen={isOpen}
+        key={post.id}
+      />
     </>
   );
 };

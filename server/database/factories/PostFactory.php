@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\ImagePost;
+use App\Models\ImageProfile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +18,11 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-       
+        $image=ImagePost::factory()->create();
         return [
             'user_id'=>fake()->unique()->randomElement(range(1,50)),
             'description'=>fake()->sentence(fake()->numberBetween(10,100)),
-            'image'=> fake()->randomElement([true,false]) ? fake()->numberBetween(1,50):null
+            'image'=>  $image->id
         ];
     }
 }

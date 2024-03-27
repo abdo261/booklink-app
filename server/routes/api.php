@@ -10,68 +10,49 @@ use App\Http\Controllers\ImageCategoryController;
 use App\Http\Controllers\ImagePostController;
 use App\Http\Controllers\ImageProfileController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Cors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('/posts/next', [PostController::class, 'indexNextPage']);
 Route::prefix('images')->group(function () {
     Route::resource('authors', ImageAuthorController::class)->except('index');
     Route::resource('book_covers', ImageBookCoverController::class)->except('index');
     Route::resource('categorys', ImageCategoryController::class)->except('index');
     Route::resource('posts', ImagePostController::class)->except('index');
-    Route::resource('profile', ImageProfileController::class)->except('index');
+    Route::resource('profiles', ImageProfileController::class)->except('index');
 });
+Route::resource('categorys', CategoryController::class);
+Route::resource('books', BookController::class);
+Route::resource('authors', AuthorController::class);
+Route::resource('posts', PostController::class);
+Route::resource('comments', CommentController::class);
+Route::resource('profiles', ProfileController::class)->except(['update']);
+Route::resource('likes', LikeController::class)->except(['update', 'show']);
 
-Route::prefix('categorys')->group(function () {
-    Route::get('/', [CategoryController::class, 'index']);
-    Route::post('/', [CategoryController::class, 'store']);
-    Route::get('/{id}', [CategoryController::class, 'show']);
-    Route::match(['put', 'patch'], '/{id}', [CategoryController::class, 'update']);
-    Route::delete('/{id}', [CategoryController::class, 'destroy']);
-});
-Route::prefix('books')->group(function () {
-    Route::get('/', [BookController::class, 'index']);
-    Route::post('/', [BookController::class, 'store']);
-    Route::get('/{id}', [BookController::class, 'show']);
-    Route::match(['put', 'patch'], '/{id}', [BookController::class, 'update']);
-    Route::delete('/{id}', [BookController::class, 'destroy']);
-});
-Route::prefix('authors')->group(function () {
-    Route::get('/', [AuthorController::class, 'index']);
-    Route::post('/', [AuthorController::class, 'store']);
-    Route::get('/{id}', [AuthorController::class, 'show']);
-    Route::match(['put', 'patch'], '/{id}', [AuthorController::class, 'update']);
-    Route::delete('/{id}', [AuthorController::class, 'destroy']);
-});
-Route::prefix('posts')->group(function () {
-    Route::get('/', [PostController::class, 'index']);
-    Route::post('/', [PostController::class, 'store']);
-    Route::get('/{id}', [PostController::class, 'show']);
-    Route::match(['put', 'patch'], '/{id}', [PostController::class, 'update']);
-    Route::delete('/{id}', [PostController::class, 'destroy']);
-});
-Route::prefix('comments')->group(function () {
-    Route::get('/', [CommentController::class, 'index']);
-    Route::post('/', [CommentController::class, 'store']);
-    Route::get('/{id}', [CommentController::class, 'show']);
-    Route::match(['put', 'patch'], '/{id}', [CommentController::class, 'update']);
-    Route::delete('/{id}', [CommentController::class, 'destroy']);
-});
-Route::prefix('likes')->group(function () {
-    Route::get('/', [LikeController::class, 'index']);
-    Route::post('/', [LikeController::class, 'store']);
-    Route::delete('/{id}', [LikeController::class, 'destroy']);
-});
+
+Route::get('books-categorys', [BookController::class, 'indexByCategorys']);
+
+Route::get('authors-books',[AuthorController::class,'indexByBooks']);
+
 Route::prefix('profiles')->group(function () {
-    Route::get('/', [ProfileController::class, 'index']);
-    Route::post('/', [ProfileController::class, 'store']);
-    Route::get('/{id}', [ProfileController::class, 'show']);
     Route::match(['put', 'patch'], '/follow/{id}', [ProfileController::class, 'followProfile']);
     Route::match(['put', 'patch'], '/unfollow/{id}', [ProfileController::class, 'unfollowProfile']);
-    Route::delete('/{id}', [ProfileController::class, 'destroy']);
 });
+
+
+
+Route::post('/sendMessage', [MessageController::class, 'send']);
+Route::get('/oldMesssages', [MessageController::class, 'getOldMessages']);
+Route::put('/updateUnreadMessages', [MessageController::class, 'updateUnreadMessages']);
+Route::delete('/removeAllMessages', [MessageController::class, 'removeAllMessages']);
+
+Route::post('/sendNotification', [NotificationsController::class, 'send']);
+Route::get('/oldNotifications', [NotificationsController::class, 'getOldNotifications']);

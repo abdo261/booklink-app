@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(50)->create();
+        // User::factory(50)->create();
         Profile::factory(50)->create();
         // $profiles = Profile::all();
         // $profiles->each(function ($profile) use ($profiles) {
@@ -44,17 +44,12 @@ class DatabaseSeeder extends Seeder
         });
 
         Post::factory(50)->create();
-        Comment::factory(40)->create();
-        Like::factory(30)->create();
-        ImagePost::factory()->create();
+        Comment::factory(400)->create();
+        Like::factory(1000)->create();
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        ImageAuthor::factory(10)->create();
-        ImageBookCover::factory(100)->create();
-        ImageCategory::factory(10)->create();
-        ImageProfile::factory(50)->create();
         Category::factory(10)->create();
         Author::factory(10)->create();
         Book::factory(100)->create();
