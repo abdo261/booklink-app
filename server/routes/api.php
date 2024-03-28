@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -21,7 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/login', [RegisteredUserController::class, 'login']);
 Route::get('/posts/next', [PostController::class, 'indexNextPage']);
+
 Route::prefix('images')->group(function () {
     Route::resource('authors', ImageAuthorController::class)->except('index');
     Route::resource('book_covers', ImageBookCoverController::class)->except('index');

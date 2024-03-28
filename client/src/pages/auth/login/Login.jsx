@@ -6,8 +6,9 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import InputCmp from "../../../components/share/InputCmp";
-import BtnCmp from "../../../components/share/BtnCmp";
+
 import CheckBoxCmp from "../../../components/share/CheckBoxCmp";
+import { Button } from "@nextui-org/react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -66,19 +67,20 @@ const Login = () => {
           <InputCmp
             endContent={
               <span className="flex items-center gap-2">
-                {formData.password.length>0 && (isVisible ? (
-                  <FaEyeSlash
-                    onClick={toggleVisibility}
-                    size={15}
-                    className="focus:outline-none text-default-400 cursor-pointer"
-                  />
-                ) : (
-                  <FaEye
-                    onClick={toggleVisibility}
-                    size={15}
-                    className="focus:outline-none text-default-400 cursor-pointer"
-                  />
-                ))}
+                {formData.password.length > 0 &&
+                  (isVisible ? (
+                    <FaEyeSlash
+                      onClick={toggleVisibility}
+                      size={15}
+                      className="focus:outline-none text-default-400 cursor-pointer"
+                    />
+                  ) : (
+                    <FaEye
+                      onClick={toggleVisibility}
+                      size={15}
+                      className="focus:outline-none text-default-400 cursor-pointer"
+                    />
+                  ))}
 
                 <IoIosLock className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
               </span>
@@ -102,7 +104,7 @@ const Login = () => {
             className="mr-auto"
             defaultValue={formData.remumber}
             onchange={handelChange}
-            field='remumber'
+            field="remumber"
           />
           <div className="flex py-2 px-1 justify-between w-full">
             <Link
@@ -112,33 +114,64 @@ const Login = () => {
             >
               register
             </Link>
-            <Link className="text-black-600 font-bold hover:underline" to="/" size="sm">
+            <Link
+              className="text-black-600 font-bold hover:underline"
+              to="/"
+              size="sm"
+            >
               Forgot password?
             </Link>
           </div>
-          <BtnCmp
-            type="submit"
-            text="Register"
-            className="w-full"
-            color="primary"
-          />
+          <Button type="submit" onClick={handelSubmit} className="w-full" color="primary">
+            Login
+          </Button>
         </form>
       </div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
-      <div className="dote-con"><span class="dot"></span></div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
+      <div className="dote-con">
+        <span class="dot"></span>
+      </div>
     </div>
   );
 };

@@ -42,3 +42,55 @@ export const getNextPagePosts = (nextPage, cb) => {
     }
   };
 };
+
+export const CreatePost = (post) => {
+  return async (dispatch) => {
+    dispatch(postActions.setLoading(true));
+    dispatch(postActions.setError(null));
+    try {
+      const res = await request.post("/posts",post);
+      // console.log("Response Data:", res.data);
+      dispatch(postActions.setError(null));
+      dispatch(postActions.addPost(res.data.data.post));
+      toast.success('post created successefely')
+    } catch (err) {
+      dispatch(postActions.setError(err.message));
+    } finally {
+      dispatch(postActions.setLoading(false));
+    }
+  };
+};
+export const UpdatePost = (id,update) => {
+  return async (dispatch) => {
+    dispatch(postActions.setLoading(true));
+    dispatch(postActions.setError(null));
+    try {
+      const res = await request.put(`/posts${id}`,update);
+      // console.log("Response Data:", res.data);
+      dispatch(postActions.setError(null));
+      dispatch(postActions.updatePost(res.data.data.post));
+      toast.success('post updated successefely')
+    } catch (err) {
+      dispatch(postActions.setError(err.message));
+    } finally {
+      dispatch(postActions.setLoading(false));
+    }
+  };
+};
+export const DeletePost = (id) => {
+  return async (dispatch) => {
+    dispatch(postActions.setLoading(true));
+    dispatch(postActions.setError(null));
+    try {
+      const res = await request.delete(`/posts${id}`);
+      // console.log("Response Data:", res.data);
+      dispatch(postActions.setError(null));
+      dispatch(postActions.updatePost(res.data.data.post));
+      toast.success('post deleted successefely')
+    } catch (err) {
+      dispatch(postActions.setError(err.message));
+    } finally {
+      dispatch(postActions.setLoading(false));
+    }
+  };
+};

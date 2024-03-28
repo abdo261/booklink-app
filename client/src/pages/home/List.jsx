@@ -17,13 +17,15 @@ const List = ({ posts }) => {
     setPage(prev=>prev+1)
    
   }, [page,dispatch]);
-  console.log(process.env.REACT_APP_API_BASE_UR)
+
   return (
     <div className="flex flex-col gap-3 py-3 ">
       {posts.map((p,i) => (
         <Post post={p} key={i} />
       ))}
-      <BtnCmp text='show more' oncklick={getNestPostsList} isDisabled={nextPostLoading} isLoading={nextPostLoading} />
+      <BtnCmp text='show more'
+     
+        onPress={getNestPostsList} isDisabled={nextPostLoading} isLoading={nextPostLoading} />
     </div>
   );
 };

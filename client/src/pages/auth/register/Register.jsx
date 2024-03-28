@@ -1,29 +1,35 @@
 import "../auth.css";
 import { MdEmail } from "react-icons/md";
 import { IoIosLock } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import InputCmp from "../../../components/share/InputCmp";
-import BtnCmp from "../../../components/share/BtnCmp";
 import CheckBoxCmp from "../../../components/share/CheckBoxCmp";
+import { Button } from "@nextui-org/react";
+import { RegisterUser } from "../../../redux/apiCalls/auth";
+import {useDispatch, useSelector} from 'react-redux'
+import { desableAuthBtn, existKey } from "../../../utils/functions";
 
 const Register = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {errors,loading}=useSelector(state=>state.auth)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirme: "",
+    password_confirmation: "",
     remumber:false
   });
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-
+ 
   const handelChange = (field, value) =>
     setFormData({ ...formData, [field]: value });
   const handelSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(RegisterUser(formData,()=>navigate('/login')))
   };
 
   return (
@@ -60,6 +66,8 @@ const Register = () => {
             onchange={handelChange}
             field='email'
             defaultValue={formData.email}
+            isInvalid={errors && existKey("email", errors)}
+            errorMessage={errors && existKey("email", errors) && errors["email"]}
           />
           <InputCmp
             endContent={
@@ -91,12 +99,15 @@ const Register = () => {
             onchange={handelChange}
             field='password'
             defaultValue={formData.password}
-           
+            isInvalid={errors && existKey("password", errors)}
+            errorMessage={
+              errors && existKey("password", errors) && errors["password"]
+            }
           />
           <InputCmp
             endContent={
               <span className="flex items-center gap-2">
-                {formData.confirme.length>0 && ( isVisible ? (
+                {formData.password_confirmation.length>0 && ( isVisible ? (
                   <FaEyeSlash
                     onClick={toggleVisibility}
                     size={15}
@@ -121,28 +132,24 @@ const Register = () => {
             type={isVisible ? "text" : "password"}
             radius="md"
             onchange={handelChange}
-            field='confirme'
-            defaultValue={formData.confirme}
+            field='password_confirmation'
+            defaultValue={formData.password_confirmation}
+            isInvalid={errors && existKey("password_confirmation", errors)}
+            errorMessage={
+              errors &&
+              existKey("password_confirmation", errors) &&
+              errors["password_confirmation"]
+            }
           />
-             <CheckBoxCmp
-            label="Remember me"
-            classNames={{
-              label: "text-xs",
-            }}
-            className="mr-auto"
-            defaultValue={formData.remumber}
-            onchange={handelChange}
-            field='remumber'
-          />
-          <div className="flex py-2 px-1 justify-between w-full">
+         
+          <div className="py-1 px-1 w-full">
             <Link className="text-black-600 font-bold hover:underline" to="/login" size="sm">
-              login
+             already have an acout login ?
             </Link>
-            <Link className="text-black-600 font-bold hover:underline" to="/" size="sm">
-              Forgot password?
-            </Link>
-          </div>
-          <BtnCmp type='submit' text="Register" className="w-full" color="primary" />
+          </div> 
+          <Button type="submit" size="lg"  onClick={handelSubmit} className="w-full font-bold" color="primary" isLoading={loading} isDisabled={desableAuthBtn(formData)}>
+            Register
+          </Button>
         </form>
       </div>
       <div className="dote-con"><span class="dot"></span></div>

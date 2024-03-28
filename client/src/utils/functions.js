@@ -28,3 +28,21 @@ export function timeAgo(timestamp) {
       return 'just now';
   }
 }
+
+export const existKey = (key, object) => {
+    if(!object) return
+    if (key in object) return true
+     else return false
+  };
+  export const isEmpty =(word='')=>{
+return word.trim().length ===0
+  }
+  export const desableAuthBtn = (data) => {
+    for (const key in data) {
+      if (typeof data[key] !== 'string') return; 
+      if (isEmpty(data[key])) {
+        return true;
+      }
+    }
+    return false; 
+  };

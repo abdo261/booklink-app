@@ -24,15 +24,12 @@ class ImageAuthorController extends Controller
         if ($validateData->fails()) {
             return response()->json($validateData->errors());
         }
-
         $imageFile = $request->file('data');
         $imageData = base64_encode(file_get_contents($imageFile));
-
         $image = ImageAuthor::create([
             'name' => $request->input('name'),
             'data' => $imageData,
         ]);
-
         return response()->json($image, 201);
     }
 
@@ -44,11 +41,7 @@ class ImageAuthorController extends Controller
         if (!$image) {
             abort(404);
         }
-
-
         $imageData = base64_decode($image->data);
-
-
         $contentType = 'image/' . pathinfo($image->name, PATHINFO_EXTENSION);
 
         // Return the image data as response
@@ -77,8 +70,6 @@ class ImageAuthorController extends Controller
         if (!$image) {
             return response()->json(['message' => 'Image not found'], 404);
         }
-
-
         $image->delete();
 
         return response()->json(['message' => 'Image deleted'], 200);

@@ -18,11 +18,11 @@ const BtnCmp = ({
   endContent,
   isIconOnly = false,
   ariaLabel,
-  type
+  type="button",
+  onPress
 }) => {
   const handelCklick = () => {
-    type!=="submit"&&oncklick();
-    
+   oncklick();
   };
   return (
     <Button
@@ -40,6 +40,7 @@ const BtnCmp = ({
       id={id}
       onClick={handelCklick}
       type={type}
+      onPress={onPress}
     >
       {icon && icon}
       {text}

@@ -27,6 +27,7 @@ const Home = () => {
   const getPostsList = useCallback(() => {
     dispatch(getPosts());
   }, [dispatch]);
+  
   useEffect(() => {
     getAuthorsList();
     getPostsList();

@@ -1,3 +1,9 @@
 div.ligne{
    padding: 1px;
 }
+.create-post-image img {
+   max-width: 100%;
+}
+.creat-image-container{
+   width: fit-content;
+}

@@ -6,7 +6,10 @@ const InputFileCmp = ({
   type = "file",
   placeholder,
   onchange,
+  style,
+  id
 }) => {
+  
   const handelChange = (e) => {
     const newFile = e.target.files[0];
     onchange(field, newFile);
@@ -21,6 +24,7 @@ const InputFileCmp = ({
       className={className}
       type={type}
       onChange={handelChange}
+      style={style}
     />
   );
 };
