@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ImageAuthorController;
 use App\Http\Controllers\ImageBookCoverController;
 use App\Http\Controllers\ImageCategoryController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ImagePostController;
 use App\Http\Controllers\ImageProfileController;
 use App\Http\Controllers\LikeController;
@@ -60,3 +61,5 @@ Route::delete('/removeAllMessages', [MessageController::class, 'removeAllMessage
 
 Route::post('/sendNotification', [NotificationsController::class, 'send']);
 Route::get('/oldNotifications', [NotificationsController::class, 'getOldNotifications']);
+
+Route::post('/images/test',[ImageController::class,'store']);

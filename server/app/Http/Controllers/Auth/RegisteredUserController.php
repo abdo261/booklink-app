@@ -28,50 +28,56 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|string|min:8|same:password', // Ensure password_confirmation matches password
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-    
+
         $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-    
+
         event(new Registered($user));
-    
+
         return response()->json(['message' => 'User registered successfully.'], 201);
     }
     public function login(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|string|email|max:255',
-        'password' => 'required|string',
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8',
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $user->load('profile');
+            $token = $user->createToken('AuthToken', [
+                'id' => $user->id,
+                'email' => $user->email,
+                'is_admin' => $user->is_admin,
+            ])->plainTextToken;
+            if ($user->profile) {
+                return response()->json([
+                    'user' => $user,
+                    'token' => $token,
+                    'message' => " login successefely welcome back " . $user->profile->user_name
+                ], 200);
+            } else {
+                return response()->json([
+                    'user' => $user,
+                    'token' => $token,
+                    'message' => 'You do not have a profile. Please create one first.'
+                ], 200);
+            }
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
-
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        $user->load('profile'); // Eager load the profile relation
-
-        $token = $user->createToken('AuthToken', [
-            'id' => $user->id,
-            'email' => $user->email,
-            'is_admin' => $user->is_admin,
-        ])->plainTextToken;
-
-        return response()->json([
-            'user' => $user, // Include the user data with the profile relation loaded
-            'token' => $token
-        ], 200);
-    }
-
-    return response()->json(['error' => 'Unauthorized'], 401);
-}
-    
 }

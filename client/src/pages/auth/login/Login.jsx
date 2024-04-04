@@ -1,21 +1,25 @@
 import "../auth.css";
 import { MdEmail } from "react-icons/md";
 import { IoIosLock } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import InputCmp from "../../../components/share/InputCmp";
-
 import CheckBoxCmp from "../../../components/share/CheckBoxCmp";
 import { Button } from "@nextui-org/react";
-
+import {useDispatch, useSelector} from 'react-redux'
+import { loginUser } from "../../../redux/apiCalls/auth";
+import { desableAuthBtn, existKey } from "../../../utils/functions";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     remumber: false,
   });
+  const {loading,errors}= useSelector(state=>state.auth)
+  const dispatch =useDispatch()
+  const navigate = useNavigate()
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -24,7 +28,8 @@ const Login = () => {
   };
   const handelSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData)
+    dispatch(loginUser(formData,()=>navigate('/')))
   };
   return (
     <div className="login flex items-center justify-center h-screen ">
@@ -63,6 +68,8 @@ const Login = () => {
             field="email"
             defaultValue={formData.email}
             onchange={handelChange}
+            isInvalid={errors && existKey("email", errors)}
+            errorMessage={errors && existKey("email", errors) && errors["email"]}
           />
           <InputCmp
             endContent={
@@ -95,6 +102,10 @@ const Login = () => {
             field="password"
             defaultValue={formData.password}
             onchange={handelChange}
+            isInvalid={errors && existKey("password", errors)}
+            errorMessage={
+              errors && existKey("password", errors) && errors["password"]
+            }
           />
           <CheckBoxCmp
             label="Remember me"
@@ -122,7 +133,7 @@ const Login = () => {
               Forgot password?
             </Link>
           </div>
-          <Button type="submit" onClick={handelSubmit} className="w-full" color="primary">
+          <Button type="submit" isLoading={loading}  isDisabled={desableAuthBtn(formData)} onClick={handelSubmit} className="w-full" color="primary">
             Login
           </Button>
         </form>
